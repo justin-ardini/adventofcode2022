@@ -4,15 +4,12 @@ import operator
 
 Number = Union[float, int]
 
-def read_test(f: str, map_fn=str, sep = '\n') -> list:
+def read_day(day: int, map_fn=str, sep = '\n') -> list:
+  return read_inputs(f'day{str(day).zfill(2)}.txt', map_fn, sep)
+
+def read_inputs(f: str, map_fn=str, sep = '\n') -> list:
   """Applies map_fn to each item, defaults to 1 item per line."""
   with open(f'inputs/{f}.txt') as f:
-    parts = f.read().rstrip().split(sep)
-    return list(map(map_fn, parts))
-
-def read_day(day: int, map_fn=str, sep = '\n') -> list:
-  """Applies map_fn to each item, defaults to 1 item per line."""
-  with open(f'inputs/day{str(day).zfill(2)}.txt') as f:
     parts = f.read().rstrip().split(sep)
     return list(map(map_fn, parts))
 
