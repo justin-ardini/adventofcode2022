@@ -1,5 +1,6 @@
 from functools import reduce
 from typing import Union
+import itertools
 import operator
 
 Number = Union[float, int]
@@ -9,7 +10,7 @@ def read_day(day: int, map_fn=str, sep = '\n') -> list:
 
 def read_inputs(f: str, map_fn=str, sep = '\n') -> list:
   """Applies map_fn to each item, defaults to 1 item per line."""
-  with open(f'inputs/{f}.txt') as f:
+  with open(f'inputs/{f}') as f:
     parts = f.read().rstrip().split(sep)
     return list(map(map_fn, parts))
 
@@ -47,6 +48,16 @@ def bits_to_dec(bits):
   for bit in bits:
     out = (out << 1) | bit
   return out
+
+def copy_grid(grid):
+  """Returns a copy of a 2D grid."""
+  return [r[:] for r in grid]
+
+def get_neighbors(grid, cell, dimensions):
+  '''Returns all neighbors (including diagonals) of an N-dimensional grid cell.'''
+  for c in itertools.product(*(range(i-1, i+2) for i in cell)):
+    if c != cell and all(i >= 0 and i < s for i, s in zip(c, dimensions)):
+      yield c
 
 # 2D vector
 class Vec2d:
